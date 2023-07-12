@@ -1,0 +1,10 @@
+view hiển thị event trong calendar api=> process=> function calendarView()
+
+
+data sửa data hocphan, hocky
+tbl_kehoach Xóa tên giagr viên và thêm trực tiếp vào bảng môn học
+
+chọn số tiết trong 1 buổi khi add thời khóa biểu
+
+
+pp: Đọc dữ liệu từ file excel và luuw vào database => hiển thị ra lịch
