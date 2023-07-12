@@ -211,7 +211,7 @@ function calendarView() {
 		$b->allDay = true; 
 		$b->url = WEB_ROOT . 'views/?v=USER&ID=' .$ID;
 		$b->borderColor = '#F0F0F0';
-		$b->className = 'fc-disabled';
+		$b->className = 'fc-disabled';     
 		$bookings[] = $b;
 	}//while
 	echo json_encode($bookings);
