@@ -29,7 +29,7 @@ $records = gethocphan();
         <td><?php echo $ptenhocphan; ?></a></td>
         <td><?php echo $pstc; ?></td>
         <td><?php echo $ptengiangvien ?></td>
-        <td><a href="javascript:deleteHocPhan('<?php echo $pmahocphan ?>');">Delete</a></td>
+        <td><a href="javascript:deleteHocPhan('<?php echo $pid ?>');">Delete</a></td>
       </tr>
       <?php } ?>
     </table>
@@ -42,9 +42,9 @@ $records = gethocphan();
 </div>
 <!-- /.box -->
 <script language="javascript">
-function deleteHocPhan(pmahocphan) {
+function deleteHocPhan(pid) {
 	if(confirm('Deleting holiday will allows user to book that date.\n\nAre you sure you want to proceed ?')) {
-		window.location.href = '<?php echo WEB_ROOT; ?>api/process.php?cmd=pdelete&pmahocphan='+pmahocphan;
+		window.location.href = '<?php echo WEB_ROOT; ?>api/process.php?cmd=pdelete&pid='+pid;
 	}
 }
 function createHocPhanForm() {

@@ -29,6 +29,28 @@
 		<input type="text" name="tenHocKy" class="form-control input-sm" placeholder="Tên Học Kỳ">
 		</span>
       </div>
+      <div>
+      <label for="datestart">Thời gian bắt đầu :</label>
+  <input type="date" id="datestart" name="datestart"><br><br>
+
+  <label for="dateend">Thời gian kết thúc :</label>
+  <input type="date" id="dateend" name="dateend"><br><br>
+</div>
+      <!-- <div>
+      <label for="exampleInputEmail1">Môn học</label>
+      <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">1</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">2</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
+  <label class="form-check-label" for="inlineCheckbox3">3</label>
+</div>
+</div> -->
 	 
 	  		  
 	  

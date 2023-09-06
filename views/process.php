@@ -27,6 +27,9 @@ switch($cmd) {
 	case 'createkh':
 		createkehoach();
 	break;	
+	case 'viewdt':
+		viewdata();
+	break;
 	
 	default :
 	break;
@@ -62,6 +65,8 @@ function createUser() {
 	exit();
 }
 
+
+
 function createClass() {
 	$idMaLop		= $_POST['idMaLop'];
 	$tenLop 	= $_POST['tenLop'];
@@ -88,6 +93,8 @@ function createClass() {
 function createHocKy() {
 	$maHocKy		= $_POST['maHocKy'];
 	$tenHocKy 	= $_POST['tenHocKy'];
+	$datestart = POST['datestart'];
+	$dateend = POST['dateend'];
 	
 	//TODO first check if that date has a holiday
 	$hsql	= "SELECT * FROM hocky WHERE tenHocKy = '$tenHocKy'";
@@ -98,8 +105,8 @@ function createHocKy() {
 		exit();
 	}
 	$pwd = random_string();
-	$sql = "INSERT INTO hocky (maHocKy,tenHocKy)
-			VALUES ('$maHocKy', '$tenHocKy')";	
+	$sql = "INSERT INTO hocky (maHocKy,tenHocKy,dateStart,dateEnd)
+			VALUES ('$maHocKy', '$tenHocKy', '$datestart', '$dateend')";	
 	dbQuery($sql);
 	$bodymsg = "Class $tenHocKy booked the date slot on. Requesting you to please take further action on user booking.<br/>Mbr/>Tousif Khan";
 	$data = array('to' => '$email', 'sub' => 'Booking on $rdate.', 'msg' => $bodymsg);
@@ -164,4 +171,30 @@ function createkehoach() {
 
 
 }
+
+// function viewdata() {
+// 	// $per_page = 10;
+// 	// $page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
+// 	// $start 	= ($page-1)*$per_page;
+
+// 	$datestart	= $_GET['datestart'];
+// 	$dateend = $_GET['dateend'];
+// 	$lophocphan = $_GET['lophocphan'];
+// 	$rdotrangthai = $_GET['rdotrangthai'];
+// 	//$hsql = "select * from tbl_thoikhoabieu";
+// 	if ($rdotrangthai == '0') {
+// 	$hsql	= "SELECT * FROM tbl_thoikhoabieu WHERE (startDate BETWEEN '$datestart' AND '$dateend') and Subject = '$lophocphan'";}
+// 	else {
+// 		$hsql	= "SELECT * FROM tbl_thoikhoabieu WHERE (startDate BETWEEN '$datestart' AND '$dateend') and Subject = '$lophocphan' and Event=1";}
+
+// 	$hresult = dbQuery($hsql);
+// 	$view = array();
+// 	while($hrow = dbFetchAssoc($hresult)) {	
+// 		extract($hrow);
+// 		$view[] = array("Subject" => $Subject, "startDate" => $startDate, "Location"=> $Location, "soTiet"=>$soTiet);
+// 	}//while
+// 	echo json_encode($view);
+// 	header('Location: ../views/?v=view');
+// 	return $view;
+// }
 ?>

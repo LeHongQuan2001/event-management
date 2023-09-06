@@ -1,6 +1,7 @@
 
 <?php
 require_once '../library/config.php';
+require_once '../api/process.php';
 require_once '../library/functions.php';
 
 checkFDUser();
@@ -56,6 +57,14 @@ switch ($view) {
 		$content 	= 'hocky.php';		
 		$pageTitle 	= 'Học kỳ';
 		break;
+	case 'LTTD' :
+		$content 	= 'lichtheotiendoview.php';		
+		$pageTitle 	= 'Lịch theo tiến độ';
+		break;
+	case 'TKTG' :
+		$content 	= 'thongkethucgiang.php';		
+		$pageTitle 	= 'Thống kê thực giảng';
+		break;
 	case 'HOCPHAN' :
 		$content 	= 'hocphan.php';		
 		$pageTitle 	= 'Học Phần';
@@ -72,7 +81,10 @@ switch ($view) {
 		$content 	= 'kehoach.php';		
 		$pageTitle 	= 'Kế Hoạch';
 		break;
-	
+	case 'viewthongke' :
+		$content 	= 'viewthongke.php';		
+		$pageTitle 	= 'Thống kê';
+		break;
 	default :
 		$content 	= 'dashboard.php';		
 		$pageTitle 	= 'Calendar Dashboard';

@@ -9,6 +9,9 @@ require_once '../library/functions.php';
 $cmd = isset($_GET['cmd']) ? $_GET['cmd'] : '';
 
 switch($cmd) {
+	case 'viewdt':
+		viewdata();
+	break;
 	
 	case 'book':
 		bookCalendar();
@@ -160,8 +163,8 @@ function deleteHocKy() {
 	exit();
 }
 function deleteHocPhan() {
-	$pId	= $_GET['pmahocphan'];
-	$dsql	= "DELETE FROM hocphan WHERE maHocPhan = $pId";
+	$pId	= $_GET['pid'];
+	$dsql	= "DELETE FROM hocphan WHERE id = $pId";
 	dbQuery($dsql);
 	header('Location: ../views/?v=HOCPHAN&msg=' . urlencode('Hoc Phan record successfully deleted.'));
 	exit();
@@ -174,6 +177,9 @@ function calendarView() {
 	//$edate	= date("Y-m-d\TH:i\Z", time($end));
 	$bookings = array();
 	$idName= $_SESSION['calendar_fd_user']['idName'];
+	
+	// print_r($idName);
+	// die();
 	$type= $_SESSION['calendar_fd_user']['type'];
 	// $sql	= "SELECT u.name AS u_name, u.id AS user_id, r.rdate, r.status 
 	// 		   FROM tbl_users u, tbl_reservations r 
@@ -195,23 +201,32 @@ function calendarView() {
 	// 	$bookings[] = $book; 
 	// }
 	//execute SQLs to get the Holiday blocking days List within the limit of start, end date;
-	$hsql	= "SELECT * FROM tbl_thoikhoabieu 
+
+	if ($idName=='admin') {
+	$qsql	= "SELECT * FROM tbl_thoikhoabieu 
 			   WHERE  (startDate BETWEEN '$start' AND '$end') ";
-	
-	$qsql = "SELECT * FROM tbl_thoikhoabieu
-			where CBGD='$idName'
-			and (startDate BETWEEN '$start' AND '$end') ";
-	$hresult = dbQuery($hsql);
+	} else {
+	$qsql = " SELECT * FROM tbl_thoikhoabieu
+	where  CBGD='$idName' and startDate BETWEEN '$start' AND '$end'";
+	}
+			// print_r($qsql);
+			// die();
+	$hresult = dbQuery($qsql);
 	while($hrow = dbFetchAssoc($hresult)) {	
 		extract($hrow);	   
 		$b = new Booking();
 		$b->block = true;
 		$b->title = $Description;
 		$b->start = $startDate;
+		$bgClr = '#f39c12';
+		if($Event == '0') {$bgClr = '#ffc107';}
+		else if($Event == '1') {$bgClr = '#00cc00';}
+		$b->backgroundColor = $bgClr; //#7FFF00 -> green, #ff0000 red, #f39c12 -> pending 
+		$b->borderColor = $bgClr;
 		$b->allDay = true; 
 		$b->url = WEB_ROOT . 'views/?v=USER&ID=' .$ID;
 		$b->borderColor = '#F0F0F0';
-		$b->className = 'fc-disabled';
+		//$b->className = 'fc-disabled';
 		$bookings[] = $b;
 	}//while
 	echo json_encode($bookings);
@@ -233,6 +248,32 @@ function userDetails() {
 	echo json_encode($user);
 }
 
+function viewdata() {
+	// $per_page = 10;
+	// $page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
+	// $start 	= ($page-1)*$per_page;
+	$datestart	= $_GET['datestart'];
+	$dateend = $_GET['dateend'];
+	$lophocphan = $_GET['lophocphan'];
+	$rdotrangthai = $_GET['rdotrangthai'];
+	//$hsql = "select * from tbl_thoikhoabieu";
+	if ($rdotrangthai == '0') {
+	$hsql	= "SELECT * FROM tbl_thoikhoabieu WHERE (startDate BETWEEN '$datestart' AND '$dateend') and Subject = '$lophocphan'";}
+	else {
+		$hsql	= "SELECT * FROM tbl_thoikhoabieu WHERE (startDate BETWEEN '$datestart' AND '$dateend') and Subject = '$lophocphan' and Event=1";}
+
+	$hresult = dbQuery($hsql);
+	$view = array();
+	while($hrow = dbFetchAssoc($hresult)) {	
+		extract($hrow);
+		$view[] = array("Subject" => $Subject, "startDate" => $startDate, "Location"=> $Location, "soTiet"=>$soTiet);
+	}//while
+	//header('Content-Type: application/json');
+	echo json_encode($view);
+	//header('Location: ../views/?v=TKTG');
+	return $view;
+}
+
 
 
 function getClass() {
@@ -249,6 +290,34 @@ function getClass() {
 	echo json_encode($lop);
 
 }
+
+// function getlichtheotiendo(){
+// 	$idName= $_SESSION['calendar_fd_user']['idName'];
+// 	if ($idName=='admin') {
+// 		$qsql	= "SELECT * FROM tbl_lichtheotiendo";
+// 		} else {
+// 		$qsql = " SELECT * FROM tbl_lichtheotiendo
+// 		where  CBGD='$idName'";
+// 		}
+// 		$hresult = dbQuery($hsql);
+// 		$lich = array();
+// 		while($hrow = dbFetchAssoc($hresult)) {	
+// 			extract($hrow);
+// 			$lich['ID'] = $ID;
+// 			$lich['maMH'] = $maMH;
+// 			$lich['tenMH'] = $tenMH;
+// 			$lich['soTinChi'] = $soTinChi;
+// 			$lich['maLop'] = $maLop;
+// 			$lich['soTCHP'] = $soTCHP;
+// 			$lich['thu'] = $thu;
+// 			$lich['tietBD'] = $tietBD;
+// 			$lich['soTiet'] = $soTiet;
+// 			$lich['phong'] = $phong;
+// 			$lich['CBGD'] = $CBGD;
+// 			$lich['tuan'] = $tuan;
+// 		}//while
+// 		echo json_encode($lich);
+// }
 
 
 ?>

@@ -4,7 +4,7 @@ $records = gethocky();
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">Danh sách lớp học</h3>
-    <button style="margin-left: 733px;" type="button" class="btn btn-info" onclick="javascript:createHocKyForm();"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Thêm mới lớp học</button>
+    <button style="margin-left: 733px;" type="button" class="btn btn-info" onclick="javascript:createHocKyForm();"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Thêm mới học kỳ</button>
   </div>
   <!-- /.box-header -->
   <div class="box-body">

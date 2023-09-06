@@ -51,7 +51,7 @@ $(function () {
 			})
 			;
 		},
-        editable: true,
+        editable: false,
         droppable: true, // this allows things to be dropped onto the calendar !!!
         drop: function (date, allDay) { },
 		eventClick: function(calEvent, jsEvent, view) {

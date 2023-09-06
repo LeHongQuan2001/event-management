@@ -229,28 +229,56 @@ function getlop() {
 	}//while
 	return $records;
 }
+function getlopid() {
+	$idName= $_SESSION['calendar_fd_user']['idName'];
+	$per_page = 10;
+	$page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
+	$start 	= ($page-1)*$per_page;
+	$sql 	= "SELECT DISTINCT Subject FROM tbl_thoikhoabieu WHERE CBGD='$idName'";
+	//echo $sql;
+	$result = dbQuery($sql);
+	$records = array();
+	while($row = dbFetchAssoc($result)) {
+		extract($row);
+		$records[] = array("lsubject"=>$Subject);	
+	}//while
+	return $records;
+}
 
 function gethocky() {
 	$per_page = 10;
 	$page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
 	$start 	= ($page-1)*$per_page;
 	$sql 	= "SELECT * FROM hocky";
-	//echo $sql;
 	$result = dbQuery($sql);
 	$records = array();
 	while($row = dbFetchAssoc($result)) {
 		extract($row);
-		$records[] = array("kid" =>$id,"kmahocky" =>$maHocKy, "ktenhocky" => $tenHocKy);	
+		$records[] = array("kid" =>$id,"kmahocky" =>$maHocKy, "ktenhocky" => $tenHocKy, "kdatestart"=>$dateStart, "kdateend"=>$dateEnd);	
 	}//while
 	return $records;
 }
+
 
 function gethocphan() {
 	$per_page = 10;
 	$page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
 	$start 	= ($page-1)*$per_page;
 	$sql 	= "SELECT * FROM hocphan";
-	//echo $sql;
+	$result = dbQuery($sql);
+	$records = array();
+	while($row = dbFetchAssoc($result)) {
+		extract($row);
+		$records[] = array("pid" =>$id,"pmahocphan" =>$maHocPhan, "ptenhocphan" => $tenHocPhan, "pstc" => $soTinChi, "ptengiangvien" => $tenGiangVien);	
+	}//while
+	return $records;
+}
+function gethocphanid() {
+	$fullName= $_SESSION['calendar_fd_user']['fullName'];
+	$per_page = 10;
+	$page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
+	$start 	= ($page-1)*$per_page;
+	$sql 	= "SELECT * FROM hocphan where tenGiangVien='$fullName'";
 	$result = dbQuery($sql);
 	$records = array();
 	while($row = dbFetchAssoc($result)) {
@@ -260,4 +288,24 @@ function gethocphan() {
 	return $records;
 }
 
+function getlichtheotiendo(){
+	$per_page = 10;
+	$page 	= (isset($_GET['page']) && $_GET['page'] != '') ? $_GET['page'] : 1;
+	$start 	= ($page-1)*$per_page;
+
+	$idName= $_SESSION['calendar_fd_user']['idName'];
+	if ($idName=='admin') {
+		$qsql	= "SELECT * FROM tbl_lichtheotiendo";
+		} else {
+		$qsql = " SELECT * FROM tbl_lichtheotiendo
+		where  CBGD='$idName'";
+		}
+		$hresult = dbQuery($qsql);
+		$lich = array();
+		while($hrow = dbFetchAssoc($hresult)) {	
+			extract($hrow);
+			$lich[] = array("ID" => $ID, "maMH" => $maMH, "tenMH" => $tenMH,"soTinChi" => $soTinChi,"maLop" => $maLop,"soTCHP" => $soTCHP,"thu" => $thu,"tietBD" => $tietBD,"soTiet" => $soTiet,"phong" => $phong,"CBGD" => $CBGD,"tuan" => $tuan);
+		}//while
+		return $lich;
+}
 ?>

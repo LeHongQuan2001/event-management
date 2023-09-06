@@ -1,3 +1,6 @@
+<?php
+$records=getUserRecords();
+?>
 <div class="col-md-8">
   
 <link href="<?php echo WEB_ROOT; ?>library/spry/textfieldvalidation/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
@@ -36,10 +39,21 @@
 		</span>
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">Giảng viên</label>
-        <span id="sprytf_name">
+        <label for="exampleInputEmail1">Giảng viên</label><br>
+        <select name="tenGiangVien">
+   <option>Lựa chọn</option>
+  <?php 
+  foreach ($records as $rec) {
+    extract($rec);
+  ?>
+    <option><?php echo $user_fullname; ?> </option>
+    <?php 
+    }
+   ?>
+</select>
+        <!-- <span id="sprytf_name">
 		<input type="text" name="tenGiangVien" class="form-control input-sm" placeholder="Họ và tên">
-		</span>
+		</span> -->
       </div>
 	 
 	  		  
